@@ -125,7 +125,13 @@ public final class JSch {
 		}
 	}
 
-	public void setKnownHosts(String filename) throws JSchException {
+	/**
+         * Sets the known hosts file for the host key repository.
+         * 
+         * @param filename
+         * @throws JSchException
+         */
+        public void setKnownHosts(String filename) throws JSchException {
 		if( _hostKeyRepository instanceof KnownHosts ) {
 			synchronized( _hostKeyRepository ) {
 				((KnownHosts) _hostKeyRepository).setKnownHosts(filename);
