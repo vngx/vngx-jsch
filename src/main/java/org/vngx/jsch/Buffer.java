@@ -130,32 +130,32 @@ public final class Buffer {
 
 	/**
 	 * Puts the contents of the specified {@code bytes} into the buffer at the
-	 * current index starting at {@code start} position in the specified
+	 * current index starting at {@code offset} position in the specified
 	 * {@code bytes} through the specified {@code length}.
 	 *
 	 * @param bytes to put in buffer
-	 * @param start position in specified {@code bytes}
+	 * @param offset position in specified {@code bytes}
 	 * @param length of specified {@code bytes} to put
 	 * @return this instance
 	 */
-	public Buffer putBytes(final byte[] bytes, int start, int length) {
-		System.arraycopy(bytes, start, buffer, index, length);
+	public Buffer putBytes(final byte[] bytes, int offset, int length) {
+		System.arraycopy(bytes, offset, buffer, index, length);
 		index += length;
 		return this;
 	}
 
 	/**
 	 * Puts the contents of the specified {@code Buffer} into the buffer at the
-	 * current index starting at {@code start} position in the specified
+	 * current index starting at {@code offset} position in the specified
 	 * {@code buffer} through the specified {@code length}.
 	 *
 	 * @param buffer to put in this buffer
-	 * @param start position in specified {@code buffer}
+	 * @param offset position in specified {@code buffer}
 	 * @param length of specified {@code buffer} to put
 	 * @return this instance
 	 */
-	public Buffer putBytes(final Buffer buffer, int start, int length) {
-		return putBytes(buffer.getArray(), start, length);
+	public Buffer putBytes(final Buffer buffer, int offset, int length) {
+		return putBytes(buffer.getArray(), offset, length);
 	}
 
 	/**
@@ -182,17 +182,17 @@ public final class Buffer {
 
 	/**
 	 * Puts the specified {@code string} data into this buffer at the current
-	 * index starting at {@code start} position in the specified {@code string}
+	 * index starting at {@code offset} position in the specified {@code string}
 	 * through the specified {@code length}.
 	 *
 	 * @param string to put in buffer
-	 * @param start position in specified {@code string}
+	 * @param offset position in specified {@code string}
 	 * @param length of {@code string} to put in buffer
 	 * @return this instance
 	 */
-	public Buffer putString(final byte[] string, int start, int length) {
+	public Buffer putString(final byte[] string, int offset, int length) {
 		putInt(length);
-		return putBytes(string, start, length);
+		return putBytes(string, offset, length);
 	}
 
 	/**
@@ -407,11 +407,12 @@ public final class Buffer {
 	}
 
 	/**
-	 * Returns the {@code byte} value from the current offset position.
+	 * Returns the {@code byte} value from the current offset position.  The
+	 * value is returned as an {@code int} as bytes are unsigned, and may not
+	 * fit in a Java {@code byte} (i.e. values {@literal 127 < b < 256}).
 	 *
-	 * @return {@code byte} value from current offset
+	 * @return {@code byte} value from current offset as an {@code int}
 	 */
-	// TODO Consider changing return type to byte?
 	public int getByte() {
 		return buffer[_offset++] & 0xFF;
 	}
@@ -442,16 +443,16 @@ public final class Buffer {
 	/**
 	 * Fills the specified {@code bytes} buffer with bytes from this buffer
 	 * starting from the current offset position and filling {@ccode bytes}
-	 * starting at the specified {@code start} through the specified
+	 * starting at the specified {@code offset} through the specified
 	 * {@code length}.
 	 *
 	 * @param bytes array to fill with data
-	 * @param start position in {@code bytes}
+	 * @param offset position in {@code bytes}
 	 * @param length to copy
 	 * @return {@code bytes} passed to method
 	 */
-	public byte[] getBytes(final byte[] bytes, int start, int length) {
-		System.arraycopy(buffer, _offset, bytes, start, length);
+	public byte[] getBytes(final byte[] bytes, int offset, int length) {
+		System.arraycopy(buffer, _offset, bytes, offset, length);
 		_offset += length;
 		return bytes;
 	}
@@ -501,7 +502,7 @@ public final class Buffer {
 	}
 
 	/**
-	 * Reads the string from the buffer and returns the start and length of the
+	 * Reads the string from the buffer and returns the offset and length of the
 	 * internal buffer which holds the string, advancing the index to after the
 	 * string value. (Performance gain to create String from internal buffer
 	 * rather than create new byte[] and copying buffer content.)
@@ -509,12 +510,12 @@ public final class Buffer {
 	 * <p>Note: Use arrays with length 1 as parameters to allow for returning
 	 * multiple values (arrays passed by reference).</p>
 	 *
-	 * @param start array to store the start position of String at index 0
+	 * @param offset array to store the offset position of String at index 0
 	 * @param length array to store the length of String at index 0
 	 */
-	void getString(int[] start, int[] length) {
+	void getString(int[] offset, int[] length) {
 		length[0] = getInt();	// Read length of String
-		start[0] = _offset;	// Set start of String as current offset
+		offset[0] = _offset;	// Set offset of String as current offset
 		_offset += length[0];	// Advance offset by length of String
 	}
 
