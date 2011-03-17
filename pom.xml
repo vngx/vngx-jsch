@@ -3,46 +3,106 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.vngx</groupId>
   <artifactId>vngx-jsch</artifactId>
-  <packaging>jar</packaging>
+  <packaging>bundle</packaging>
   <version>0.9</version>
   <name>vngx-jsch</name>
   <url>http://maven.apache.org</url>
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.0.2</version>
-                <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
-                    <encoding>${project.build.sourceEncoding}</encoding>
-                    <showDeprecation>true</showDeprecation>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>2.2</version>
-                <configuration>
-                    <encoding>${project.build.sourceEncoding}</encoding>
-                </configuration>
-            </plugin>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>2.0.2</version>
+            <configuration>
+                <source>1.6</source>
+                <target>1.6</target>
+                <encoding>${project.build.sourceEncoding}</encoding>
+                <showDeprecation>true</showDeprecation>
+            </configuration>
+        </plugin>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-resources-plugin</artifactId>
+            <version>2.2</version>
+            <configuration>
+                <encoding>${project.build.sourceEncoding}</encoding>
+            </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.felix</groupId>
+          <artifactId>maven-bundle-plugin</artifactId>
+          <version>1.4.0</version>
+          <extensions>true</extensions>
+          <configuration>
+              <instructions>
+                  <Bundle-SymbolicName>${pom.groupId}.${pom.artifactId}</Bundle-SymbolicName>
+                  <Bundle-Name>${pom.name}</Bundle-Name>
+                  <Bundle-Version>${pom.version}</Bundle-Version>
+                  <Export-Package>org.vngx.jsch.*</Export-Package>
+              </instructions>
+          </configuration>
+       </plugin>
+       <plugin>
+	      <groupId>org.apache.maven.plugins</groupId>
+	      <artifactId>maven-dependency-plugin</artifactId>
+	      <executions>
+	        <execution>
+	          <id>copy</id>
+	          <phase>package</phase>
+	          <goals>
+	            <goal>copy</goal>
+	          </goals>
+	          <configuration>
+	  			<artifactItems>
+	  				<artifactItem>
+	   				<groupId>com.jcraft.jzlib</groupId>
+				    <artifactId>com.springsource.com.jcraft.jzlib</artifactId>
+				    <version>1.0.7</version>
+		 		</artifactItem>
+	  			</artifactItems>
+	             <outputDirectory>${project.build.directory}</outputDirectory>
+	             <overWriteReleases>true</overWriteReleases>
+	             <overWriteSnapshots>true</overWriteSnapshots>
+	          </configuration>
+	        </execution>
+	      </executions>
+    	</plugin>
         </plugins>
     </build>
+    
     <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
-        <dependency>
-            <groupId>com.jcraft</groupId>
-            <artifactId>jzlib</artifactId>
-            <version>1.0.7</version>
-        </dependency>
+	    
+	    <dependency>
+	      <groupId>junit</groupId>
+	      <artifactId>junit</artifactId>
+	      <version>3.8.1</version>
+	      <scope>test</scope>
+	    </dependency>
+		
+		<dependency>
+		    <groupId>com.jcraft.jzlib</groupId>
+		    <artifactId>com.springsource.com.jcraft.jzlib</artifactId>
+		    <version>1.0.7</version> 
+		</dependency>
+    
     </dependencies>
+    
+    <repositories>
+    
+	    <repository>
+		    <id>com.springsource.repository.bundles.release</id>
+		    <name>SpringSource Enterprise Bundle Repository - SpringSource Bundle Releases</name>
+		    <url>http://repository.springsource.com/maven/bundles/release</url>
+		</repository>
+		
+		<repository>
+		    <id>com.springsource.repository.bundles.external</id>
+		    <name>SpringSource Enterprise Bundle Repository - External Bundle Releases</name>
+		    <url>http://repository.springsource.com/maven/bundles/external</url>
+		</repository>
+    
+    </repositories>
+    
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
