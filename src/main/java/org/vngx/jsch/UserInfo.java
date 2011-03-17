@@ -30,8 +30,11 @@
 package org.vngx.jsch;
 
 /**
- * Interface defining an API for a user interface for retrieving input from the
- * user and displaying messages.
+ * <p>An interface defining an API for a user interface to retrieve user input
+ * and display messages.  Implementations should take care to provide the best
+ * security practices when dealing with passwords and passphrases.  Prompts
+ * should mask any sensitive input data and ensure the values are stored safely.
+ * </p>
  *
  * @author Atsuhiko Yamanaka
  * @author Michael Laudati
@@ -39,54 +42,68 @@ package org.vngx.jsch;
 public interface UserInfo {
 
 	/**
-	 * Returns the passphrase entered by the user after a successful call to
-	 * <code>promptPassphrase(String)</code>.
+	 * <p>Returns the passphrase provided by the user after a successful call to
+	 * {@link #promptPassphrase(java.lang.String)}.  Implementations should
+	 * take care to mask the passphrase characters to prevent an eavesdropper
+	 * from viewing sensitive credentials.  A {@code null} return value
+	 * indicates the user declined to enter a passphrase.</p>
 	 *
-	 * @return passphrase entered by user or null if none set
+	 * @return passphrase entered by user or null if none provided
 	 */
 	String getPassphrase();	// TODO Consider returning byte[]
 
 	/**
-	 * Returns the password entered by the user after a successful call to
-	 * <code>promptPassword(String)</code>.
+	 * <p>Returns the password provided by the user after a successful call to
+	 * {@link #promptPassword(java.lang.String)}.  Implementations should
+	 * take care to mask the password characters to prevent an eavesdropper
+	 * from viewing sensitive credentials.  A {@code null} return value
+	 * indicates the user declined to enter a password.</p>
 	 *
-	 * @return password entered by user or null if none set
+	 * @return password entered by user or null if none provided
 	 */
 	String getPassword(); // TODO Consider returning byte[]
 
 	/**
-	 * Prompts the user with the specified message to enter a password.  The
-	 * password should be stored in such a way that it can be retrieved with
-	 * the <code>getPassword()</code> method.  Implementations should honor
-	 * best security practices by masking the password input.
+	 * <p>Prompts the user with the specified {@code message} to enter a
+	 * password.  The password should be stored in such a way that it can be
+	 * retrieved with {@link #getPassword()}.  Implementations should honor
+	 * best security practices by masking the password input.  The method should
+	 * return {@code true} if the user successfully provided a password; if the
+	 * user cancels/declines the password prompt, then {@code false} should be
+	 * returned.</p>
 	 *
-	 * @param message to display
-	 * @return true if password was successfully retrieved
+	 * @param message to display when prompting user for password
+	 * @return {@code true} if user entered password, {@code false} if user
+	 *			canceled/declined password prompt
 	 */
 	boolean promptPassword(String message);
 
 	/**
-	 * Prompts the user with the specified message to enter a passphrase.  The
-	 * passphrase should be stored in such a way that it can be retrieved with
-	 * the <code>getPassphrase()</code> method.  Implementations should honor
-	 * best security practices by masking the passphrase input.
+	 * <p>Prompts the user with the specified {@code message} to enter a
+	 * passphrase.  The passphrase should be stored in such a way that it can be
+	 * retrieved with {@link #getPassphrase()}.  Implementations should honor
+	 * best security practices by masking the passphrase input. The method should
+	 * return {@code true} if the user successfully provided a passphrase; if
+	 * the user cancels/declines the passphrase prompt, then {@code false}
+	 * should be returned.</p>
 	 *
-	 * @param message to display
-	 * @return true if passphrase was successfully retrieved
+	 * @param message to display when prompting user for passphrase
+	 * @return {@code true} if user entered passphrase, {@code false} if user
+	 *			canceled/declined passphrase prompt
 	 */
 	boolean promptPassphrase(String message);
 
 	/**
-	 * Prompts the user with the specified message and allows for a yes/no
-	 * response.
+	 * <p>Prompts the user with the specified {@code message} and allows for a
+	 * yes ({@code true}) or no ({@code false}) response.</p>
 	 *
 	 * @param message to display
-	 * @return true if user selected yes
+	 * @return {@code true} if user selected yes
 	 */
 	boolean promptYesNo(String message);
 
 	/**
-	 * Displays a the specified message to the user.
+	 * <p>Displays the specified {@code message} to the user.</p>
 	 *
 	 * @param message to display
 	 */
