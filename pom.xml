@@ -38,9 +38,9 @@
 				<extensions>true</extensions>
 				<configuration>
 					<instructions>
-						<Bundle-SymbolicName>${pom.groupId}.${pom.artifactId}</Bundle-SymbolicName>
-						<Bundle-Name>${pom.name}</Bundle-Name>
-						<Bundle-Version>${pom.version}</Bundle-Version>
+						<Bundle-SymbolicName>${project.groupId}.${project.artifactId}</Bundle-SymbolicName>
+						<Bundle-Name>${project.name}</Bundle-Name>
+						<Bundle-Version>${project.version}</Bundle-Version>
 						<Export-Package>${bundle.namespace}.*</Export-Package>
 						<Import-Package>!${bundle.namespace}.*,*</Import-Package>
 					</instructions>
@@ -63,10 +63,10 @@
 						<configuration>
 							<outputDirectory>${project.build.directory}</outputDirectory>
 							<overWriteReleases>false</overWriteReleases>
-              				<overWriteSnapshots>false</overWriteSnapshots>
-              				<overWriteIfNewer>true</overWriteIfNewer>
-              				<excludeScope>test</excludeScope>
-              				<excludeScope>provided</excludeScope>
+							<overWriteSnapshots>false</overWriteSnapshots>
+							<overWriteIfNewer>true</overWriteIfNewer>
+							<excludeScope>test</excludeScope>
+							<excludeScope>provided</excludeScope>
 						</configuration>
 					</execution>
 				</executions>
@@ -79,7 +79,7 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>3.8.1</version>
+			<version>4.8.2</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -94,7 +94,8 @@
 
 	<repositories>
 
-		<!-- Spring Repos for OSGi complaint bundles -->
+		<!-- Spring Repos for OSGi complaint bundles, if anyone knows of better 
+			sources let is know =) -->
 		<repository>
 			<id>com.springsource.repository.bundles.release</id>
 			<name>SpringSource Enterprise Bundle Repository - SpringSource Bundle Releases</name>
