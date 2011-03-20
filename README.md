@@ -14,4 +14,6 @@ Improvements include:
 * Added support for SHA-256, HMAC-SHA-256, "diffie-hellman-group-exchange-sha256" and "diffie-hellman-group14-sha1" algorithms.
 * Added support for more detailed application logging for debugging.
 * Updated to more closely follow the official RFC specifications for SSH as well as added detailed documentation from RFCs into the comments.
+* Maven build process
+* OSGi compatible
  
