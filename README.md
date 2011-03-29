@@ -18,11 +18,11 @@ Improvements include:
 * OSGi compatible
  
 Now available via any central Maven repo
- ================================
+=====================================
  just add the following you your pom.xml under dependencies:
 
     <dependency>
         <groupId>org.vngx</groupId>
-	<artifactId>vngx-jsch</artifactId>
-	<version>0.9</version>
+        <artifactId>vngx-jsch</artifactId>
+        <version>0.9</version>
     </dependency>
