@@ -19,7 +19,7 @@ Improvements include:
  
 Now available via any central Maven repo
 =====================================
- just add the following you your pom.xml under dependencies:
+ just add the following to your pom.xml under dependencies:
 
     <dependency>
         <groupId>org.vngx</groupId>
