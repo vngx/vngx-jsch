@@ -30,6 +30,7 @@
 package org.vngx.jsch.userauth;
 
 import org.vngx.jsch.Buffer;
+
 import org.vngx.jsch.Session;
 import org.vngx.jsch.Util;
 import org.vngx.jsch.constants.MessageConstants;
@@ -56,7 +57,6 @@ public final class UserAuthPublicKey extends UserAuth {
 				return false;
 			}
 
-			identityLoop:
 			for( Identity identity : identities ) {
 				byte[] pubkeyblob = identity.getPublicKeyBlob();
 
@@ -78,21 +78,24 @@ public final class UserAuthPublicKey extends UserAuth {
 					_buffer.putString(pubkeyblob);
 					session.write(_packet);
 
-					loop1:
-					while( true ) {
+					boolean read_more = true;
+					boolean failed = false;
+					while( read_more ) {
 						switch( session.read(_buffer).getCommand() & 0xff ) {
 							case SSH_MSG_USERAUTH_BANNER:
 								userAuthBanner();
-								continue loop1;
-
+								break;
 							case SSH_MSG_USERAUTH_PK_OK:
-								break loop1;
-								
+								read_more = false;
+								break;
 							case SSH_MSG_USERAUTH_FAILURE:
 							default:
-								continue identityLoop;
+								failed = true;
+								read_more = false;
 						}
 					}
+					if (failed)
+						continue;
 				}
 
 				int count = 5;	// Make this configurable, 5 attempts to enter correct passphrase
@@ -156,25 +159,23 @@ public final class UserAuthPublicKey extends UserAuth {
 				_buffer.putString(signature);
 				session.write(_packet);
 
-				loop2:
-				while( true ) {
+				boolean read_more = true;
+				while( read_more ) {
 					switch( session.read(_buffer).getCommand() & 0xff ) {
 						case SSH_MSG_USERAUTH_SUCCESS:
 							return true;	// User successfully authed by publickey!
 
 						case SSH_MSG_USERAUTH_BANNER:
 							userAuthBanner();
-							continue loop2;	// Display banner message and continue
+							break;
 
 						case SSH_MSG_USERAUTH_FAILURE:
 							userAuthFailure();
-							break loop2;	// Handle user auth failure and continue
+							read_more = false;	// Handle user auth failure and continue
 					}
-					break;
 				}
 			}
 		}
 		return false;
 	}
-	
 }
