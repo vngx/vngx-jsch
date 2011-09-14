@@ -801,7 +801,6 @@ public final class ChannelSftp extends ChannelSession {
 			} else {
 				String upath = Util.unquote(path);
 				if( _stat(upath).isDir() ) {
-					bPattern = null;
 					dir = upath;
 				} else {
 					// If we could generate longname by ourself,

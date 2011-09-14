@@ -29,17 +29,22 @@
 
 package org.vngx.jsch;
 
-import static org.vngx.jsch.constants.ConnectionProtocol.*;
-import static org.vngx.jsch.constants.TransportLayerProtocol.*;
+import static org.vngx.jsch.constants.ConnectionProtocol.SSH_MSG_CHANNEL_CLOSE;
+import static org.vngx.jsch.constants.ConnectionProtocol.SSH_MSG_CHANNEL_DATA;
+import static org.vngx.jsch.constants.ConnectionProtocol.SSH_MSG_CHANNEL_EOF;
+import static org.vngx.jsch.constants.ConnectionProtocol.SSH_MSG_CHANNEL_OPEN;
+import static org.vngx.jsch.constants.ConnectionProtocol.SSH_MSG_CHANNEL_OPEN_CONFIRMATION;
+import static org.vngx.jsch.constants.ConnectionProtocol.SSH_MSG_CHANNEL_OPEN_FAILURE;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PipedInputStream;
+import java.io.PipedOutputStream;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.vngx.jsch.exception.JSchException;
 import org.vngx.jsch.util.Logger.Level;
-import java.io.PipedInputStream;
-import java.io.PipedOutputStream;
-import java.io.InputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Default base implementation of a SSH channel and provides a centralized pool

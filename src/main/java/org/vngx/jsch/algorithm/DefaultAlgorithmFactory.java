@@ -165,7 +165,7 @@ public class DefaultAlgorithmFactory<T extends Algorithm> implements AlgorithmFa
 			throw new IllegalArgumentException(_algorithmType + " name cannot be null/empty: " + algorithmName);
 		} else if( algorithmImpl == null ) {
 			throw new IllegalArgumentException(_algorithmType + " implementation class cannot be null");
-		} else if( algorithmImpl == null || algorithmImpl.isEmpty() ) {
+		} else if( algorithmImpl.isEmpty() ) {
 			throw new IllegalArgumentException(_algorithmType + " implementation cannot be null/empty");
 		}
 		try {	// Add algorithm implementation class if it validates

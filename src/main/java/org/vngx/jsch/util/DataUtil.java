@@ -29,7 +29,6 @@
 
 package org.vngx.jsch.util;
 
-import org.vngx.jsch.exception.JSchException;
 
 /**
  * Static utility class providing some general data manipulation methods.
@@ -56,7 +55,7 @@ public final class DataUtil {
 		return (byte) (c - 10 + 'A');
 	}
 
-	public static byte[] readINTEGER(int[] index, byte[] plain) throws JSchException {
+	public static byte[] readINTEGER(int[] index, byte[] plain) {
 		index[0]++;
 		int length = plain[index[0]++] & 0xff;
 		if( (length & 0x80) != 0 ) {

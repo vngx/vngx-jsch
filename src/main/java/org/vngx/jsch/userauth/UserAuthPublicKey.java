@@ -97,7 +97,7 @@ public final class UserAuthPublicKey extends UserAuth {
 
 				int count = 5;	// Make this configurable, 5 attempts to enter correct passphrase
 				while( count-- > 0 ) {
-					if( identity.isEncrypted() && passphrase == null ) {
+					if( identity.isEncrypted() ) {
 						if( _userinfo == null ) {
 							throw new JSchException("UserAuth 'publickey' fail: identity is encrypted, no passphrase");
 						} else if( !_userinfo.promptPassphrase(String.format(MessageConstants.PROMPT_PASSPHRASE, identity.getName())) ) {
