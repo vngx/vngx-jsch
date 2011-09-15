@@ -80,7 +80,7 @@ public final class DiffieHellmanImpl implements DiffieHellman {
 	 */
 	public DiffieHellmanImpl() throws NoSuchAlgorithmException, NoSuchProviderException {
 		String provider = JSchConfig.getConfig().getString(JSchConfig.DEFAULT_SECURITY_PROVIDER);
-		if( provider.isEmpty() ) {
+		if( provider.length()==0 ) {
 			_keyPairGenerator = KeyPairGenerator.getInstance("DH");
 			_keyAgreement = KeyAgreement.getInstance("DH");
 		} else {

@@ -33,6 +33,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
+
 import org.vngx.jsch.exception.JSchException;
 import org.vngx.jsch.hash.Hash;
 import org.vngx.jsch.hash.HashManager;
@@ -83,7 +84,7 @@ public final class Util {
 			decoded[j + 2] = (byte) (((val(buffer[i + 2]) & 0x03) << 6) | (val(buffer[i + 3]) & 0x3f));
 			j += 3;
 		}
-		return Arrays.copyOf(decoded, j);
+		return Util.copyOf(decoded, j);
 	}
 
 	/**
@@ -145,7 +146,7 @@ public final class Util {
 			encoded[i++] = B64[k];
 			encoded[i++] = (byte) '=';
 		}
-		return Arrays.copyOf(encoded, i);
+		return Util.copyOf(encoded, i);
 	}
 
 	/**
@@ -380,7 +381,7 @@ public final class Util {
 		if( pathLength == path.length ) {
 			return path;
 		}
-		return Arrays.copyOf(path, pathLength);
+		return Util.copyOf(path, pathLength);
 	}
 
 	/**
@@ -568,7 +569,7 @@ public final class Util {
 	 * @return new array containing first and second
 	 */
 	public static byte[] join(byte[] first, byte[] second) {
-		byte[] combined = Arrays.copyOf(first, first.length + second.length);
+		byte[] combined = Util.copyOf(first, first.length + second.length);
 		System.arraycopy(second, 0, combined, first.length, second.length);
 		return combined;
 	}
@@ -592,7 +593,7 @@ public final class Util {
 	 * @return sanitized string with replaced control characters
 	 */
 	public static String sanitize(String source) {
-		if( source == null || source.isEmpty() ) {
+		if( source == null || source.length()==0 ) {
 			return source;
 		}
 		StringBuilder buffer = new StringBuilder(source);
@@ -606,4 +607,20 @@ public final class Util {
 		return buffer.toString();
 	}
 
+	/**
+	 * This method got added in Java 6
+	 * duplicate it here to make it easier to port to android 2.x
+	 */
+	public static byte[]	copyOf(byte[] src, int newSize) {
+		byte[] copy = new byte[newSize];
+		if (newSize<=src.length)
+			//shorter: just copy the subset
+			System.arraycopy(src, 0, copy, 0, newSize);
+		else {
+			//longer: copy whole source and pad with zeroes
+			System.arraycopy(src, 0, copy, 0, src.length);
+			Arrays.fill(copy, src.length, newSize, (byte) 0);
+		}
+		return	copy;
+	}
 }

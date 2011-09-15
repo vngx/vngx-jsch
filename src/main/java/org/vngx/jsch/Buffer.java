@@ -580,7 +580,7 @@ public final class Buffer {
 			if( (index + required) > Packet.MAX_SIZE ) {
 				throw new IllegalStateException("Buffer cannot exceed max packet size: "+(index+required));
 			}
-			buffer = Arrays.copyOf(buffer, index + required);
+			buffer = Util.copyOf(buffer, index + required);
 		}
 		return this;
 	}

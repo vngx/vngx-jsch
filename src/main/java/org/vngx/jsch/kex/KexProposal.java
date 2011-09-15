@@ -171,12 +171,12 @@ public final class KexProposal {
 			// Special case for lang: Both parties MAY ignore this name-list. If
 			// there are no language preferences, this name-list SHOULD be empty
 			if( (p == Proposal.LANG_CTOS || p == Proposal.LANG_STOC) &&
-					clientProposals.size() == 1 && clientProposals.get(0).isEmpty() ) {
+					clientProposals.size() == 1 && clientProposals.get(0).length()==0 ) {
 				proposal.set(p, "");	// Set empty name-list for lang
 			}
 			// If failure to find a mutually supported algorithm, must throw an
 			// exception and disconnect from server
-			else if( proposal.get(p) == null || proposal.get(p).isEmpty() ) {
+			else if( proposal.get(p) == null || proposal.get(p).length()==0 ) {
 				throw new KexException("Failed to find mutually supported "+p+": " +
 						"client->"+clientProposals+" server->"+serverProposals);
 			}

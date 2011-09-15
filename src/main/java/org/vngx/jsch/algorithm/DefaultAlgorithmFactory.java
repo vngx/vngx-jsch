@@ -93,7 +93,7 @@ public class DefaultAlgorithmFactory<T extends Algorithm> implements AlgorithmFa
 	@Override
 	@SuppressWarnings("unchecked")
 	public T create(String algorithmName, Session session) throws UnsupportedAlgorithmException {
-		if( session == null || session.getConfig().getString(algorithmName).isEmpty() ) {
+		if( session == null || session.getConfig().getString(algorithmName).length()==0 ) {
 			return create(algorithmName);
 		}
 		try {
@@ -143,7 +143,7 @@ public class DefaultAlgorithmFactory<T extends Algorithm> implements AlgorithmFa
 	 * @param algorithmImpl
 	 */
 	public void setAlgorithmImpl(final String algorithmName, final Class<? extends T> algorithmImpl) {
-		if( algorithmName == null || algorithmName.isEmpty() ) {
+		if( algorithmName == null || algorithmName.length()==0 ) {
 			throw new IllegalArgumentException(_algorithmType + " name cannot be null/empty: " + algorithmName);
 		} else if( algorithmImpl == null ) {
 			throw new IllegalArgumentException(_algorithmType + " implementation class cannot be null");
@@ -161,11 +161,11 @@ public class DefaultAlgorithmFactory<T extends Algorithm> implements AlgorithmFa
 	 */
 	@SuppressWarnings("unchecked")
 	public void setAlgorithmImpl(final String algorithmName, final String algorithmImpl) {
-		if( algorithmName == null || algorithmName.isEmpty() ) {
+		if( algorithmName == null || algorithmName.length()==0 ) {
 			throw new IllegalArgumentException(_algorithmType + " name cannot be null/empty: " + algorithmName);
 		} else if( algorithmImpl == null ) {
 			throw new IllegalArgumentException(_algorithmType + " implementation class cannot be null");
-		} else if( algorithmImpl.isEmpty() ) {
+		} else if( algorithmImpl.length()==0 ) {
 			throw new IllegalArgumentException(_algorithmType + " implementation cannot be null/empty");
 		}
 		try {	// Add algorithm implementation class if it validates

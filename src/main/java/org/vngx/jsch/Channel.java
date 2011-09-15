@@ -339,7 +339,7 @@ public abstract class Channel implements Runnable {
 	 * @throws IOException if any errors occur
 	 */
 	public InputStream getInputStream() throws IOException {
-		PipedInputStream in = new PipedInputStream(32 * 1024); // TODO this value should be customizable
+		PipedInputStream in = new PipedInputStream(); // TODO this value should be customizable
 		_io.setOutputStream(new PipedOutputStream(in), false);
 		return in;
 	}
@@ -352,7 +352,7 @@ public abstract class Channel implements Runnable {
 	 * @throws IOException if any errors occur
 	 */
 	public InputStream getExtInputStream() throws IOException {
-		PipedInputStream in = new PipedInputStream(32 * 1024); // TODO this value should be customizable
+		PipedInputStream in = new PipedInputStream(); // TODO this value should be customizable
 		_io.setExtOutputStream(new PipedOutputStream(in), false);
 		return in;
 	}

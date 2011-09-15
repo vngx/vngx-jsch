@@ -144,7 +144,7 @@ public class VersionExchange {
 	 * @param clientVersion to send to server
 	 */
 	public VersionExchange(final String clientVersion) {
-		if( clientVersion == null || clientVersion.isEmpty() ) {
+		if( clientVersion == null || clientVersion.length()==0 ) {
 			throw new IllegalArgumentException("Client version cannot be null/empty");
 		} else if( clientVersion.length() > MAX_VERSION_LENGTH ) {
 			throw new IllegalArgumentException("Invalid client version, cannot exceed "+MAX_VERSION_LENGTH+" characters");

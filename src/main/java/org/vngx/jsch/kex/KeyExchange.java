@@ -28,19 +28,20 @@
 
 package org.vngx.jsch.kex;
 
-import static org.vngx.jsch.constants.TransportLayerProtocol.*;
+import static org.vngx.jsch.constants.TransportLayerProtocol.SSH_MSG_KEXINIT;
+import static org.vngx.jsch.constants.TransportLayerProtocol.SSH_MSG_NEWKEYS;
 
-import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicBoolean;
+
 import org.vngx.jsch.Buffer;
 import org.vngx.jsch.JSch;
 import org.vngx.jsch.Packet;
-import org.vngx.jsch.algorithm.Random;
 import org.vngx.jsch.Session;
 import org.vngx.jsch.UserInfo;
 import org.vngx.jsch.Util;
 import org.vngx.jsch.algorithm.AlgorithmManager;
 import org.vngx.jsch.algorithm.Algorithms;
+import org.vngx.jsch.algorithm.Random;
 import org.vngx.jsch.cipher.Cipher;
 import org.vngx.jsch.config.SessionConfig;
 import org.vngx.jsch.constants.MessageConstants;
@@ -140,7 +141,7 @@ public final class KeyExchange {
 		JSch.getLogger().log(Logger.Level.INFO, "SSH_MSG_NEWKEYS received");
 
 		// Return the session ID (copy of exchange hash H) from first kex
-		return Arrays.copyOf(_kexAlg.getH(), _kexAlg.getH().length);
+		return Util.copyOf(_kexAlg.getH(), _kexAlg.getH().length);
 	}
 
 	public void rekey(Buffer rekeyBuffer) throws Exception {
@@ -216,7 +217,8 @@ public final class KeyExchange {
 			kexBuffer.putInt(0);
 
 			// Set the client's kex algorithm initialization message
-			I_C = Arrays.copyOfRange(kexBuffer.getArray(), 5, kexBuffer.getIndex());
+			I_C = new byte[kexBuffer.getIndex()-5];
+			System.arraycopy(kexBuffer.getArray(), 5, I_C, 0, I_C.length);
 			_session.write(kexPacket);	// Send key exchange init message to server
 			JSch.getLogger().log(Logger.Level.INFO, "SSH_MSG_KEXINIT sent");
 		} catch(Exception e) {
