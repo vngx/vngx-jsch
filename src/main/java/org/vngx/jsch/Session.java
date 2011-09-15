@@ -117,8 +117,6 @@ public final class Session implements Runnable {
 	private UserInfo _userinfo;
 
 	//=== Key Exchange State Variables ===
-	/** Timestamp when KEX was initiated for timing out key exchanges. */
-	private long _kexStartTime = 0L;
 	/** Key exchange for performing kex and storing state. */
 	private KeyExchange _keyExchange;
 	/** Host key generated after key exchange and validation. */

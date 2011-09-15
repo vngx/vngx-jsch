@@ -1255,10 +1255,6 @@ public final class ChannelSftp extends ChannelSession {
 		sendPacketPath(SSH_FXP_LSTAT, path);
 	}
 
-	private void sendFSTAT(byte[] handle) throws Exception {
-		sendPacketPath(SSH_FXP_FSTAT, handle);
-	}
-
 	private void sendSETSTAT(byte[] path, SftpATTRS attr) throws Exception {
 		putHEAD(SSH_FXP_SETSTAT, 9 + path.length + attr.length());
 		_buffer.putInt(_seq++);

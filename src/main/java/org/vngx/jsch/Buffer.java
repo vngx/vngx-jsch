@@ -392,7 +392,7 @@ public final class Buffer {
 	 */
 	public long getUInt() {
 		return  (((long) getShort() << 16) & 0xFFFF0000L) |	// First 16 bytes
-				(((long) getShort()      ) & 0x0000FFFFL);	// second 16 bytes
+				((       getShort()      ) & 0x0000FFFFL);	// second 16 bytes
 	}
 
 	/**

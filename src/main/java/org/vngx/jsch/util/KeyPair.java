@@ -504,6 +504,7 @@ public abstract class KeyPair {
 				Buffer _buf = new Buffer(data);
 				_buf.getInt();  // 0x3f6ff9be
 				_buf.getInt();
+				@SuppressWarnings("unused")
 				byte[] _type = _buf.getString();
 				byte[] _cipher = _buf.getString();
 				String cipher = Util.byte2str(_cipher);
