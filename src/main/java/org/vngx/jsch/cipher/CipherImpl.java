@@ -28,8 +28,6 @@
 
 package org.vngx.jsch.cipher;
 
-import java.util.Arrays;
-
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.ShortBufferException;
