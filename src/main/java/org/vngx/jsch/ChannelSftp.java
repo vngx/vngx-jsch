@@ -1913,8 +1913,8 @@ public final class ChannelSftp extends ChannelSession {
 			if( __closed ) {
 				return;
 			}
-			__closed = true;
 			flush();
+			__closed = true;
 			if( __monitor != null ) {
 				__monitor.end();
 			}
