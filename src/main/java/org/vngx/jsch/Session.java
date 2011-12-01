@@ -47,6 +47,7 @@ import java.io.InterruptedIOException;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
@@ -791,9 +792,14 @@ public final class Session implements Runnable {
 				}
 			}
 		} catch(Exception e) {
-			_keyExchange.kexCompleted();
-			if( JSch.getLogger().isEnabled(Logger.Level.INFO) ) {
-				JSch.getLogger().log(Logger.Level.INFO, "Caught an exception, leaving main loop due to " + e, e);
+			if (e instanceof SocketException && !_connected) {
+				// just closing the session
+			} else {
+				_keyExchange.kexCompleted();
+				if( JSch.getLogger().isEnabled(Logger.Level.INFO) ) {
+					JSch.getLogger().log(Logger.Level.INFO,
+						"Caught an exception, leaving main loop due to " + e, e);
+				}
 			}
 		}
 		try {
