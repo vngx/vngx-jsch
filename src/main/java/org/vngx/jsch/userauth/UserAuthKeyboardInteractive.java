@@ -47,10 +47,12 @@ public final class UserAuthKeyboardInteractive extends UserAuth {
 
 	@Override
 	public boolean authUser(Session session, byte[] password) throws Exception {
+		super.authUser(session, password);
 		if( !(_userinfo instanceof UIKeyboardInteractive) ) {
 			return false;	// Fail if no keyboard interactive interface available
+		} else if (password == null) {
+			password = _userinfo.getPassword().getBytes();
 		}
-		super.authUser(session, password);
 		_passwordPrompt = createPasswordPrompt(session);
 
 		boolean cancel = false;
