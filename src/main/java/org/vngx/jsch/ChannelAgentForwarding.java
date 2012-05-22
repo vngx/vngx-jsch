@@ -155,6 +155,7 @@ final class ChannelAgentForwarding extends Channel {
 		} else if( typ == SSH2_AGENTC_SIGN_REQUEST ) {
 			byte[] blob = _readBuffer.getString();
 			byte[] data = _readBuffer.getString();
+			@SuppressWarnings("unused")
 			int flags = _readBuffer.getInt();
 
 			Identity identity = null;

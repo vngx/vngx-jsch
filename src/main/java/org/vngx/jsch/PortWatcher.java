@@ -117,7 +117,7 @@ class PortWatcher implements Runnable {
 		synchronized( PORT_WATCHER_POOL ) {
 			for( PortWatcher p : PORT_WATCHER_POOL ) {
 				if( p._session == session && p._localPort == localPort &&
-					(ANY_LOCAL != null && p._boundAddress.equals(ANY_LOCAL)) || p._boundAddress.equals(addr) ) {
+					((ANY_LOCAL != null && p._boundAddress.equals(ANY_LOCAL)) || p._boundAddress.equals(addr)) ) {
 					return p;
 				}
 			}

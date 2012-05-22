@@ -28,13 +28,15 @@
 
 package org.vngx.jsch.kex;
 
-import static org.vngx.jsch.constants.TransportLayerProtocol.*;
+import static org.vngx.jsch.constants.TransportLayerProtocol.SSH_MSG_KEXDH_INIT;
+import static org.vngx.jsch.constants.TransportLayerProtocol.SSH_MSG_KEXDH_REPLY;
 
 import java.io.IOException;
-import java.util.Arrays;
+
 import org.vngx.jsch.Buffer;
 import org.vngx.jsch.JSch;
 import org.vngx.jsch.Session;
+import org.vngx.jsch.Util;
 import org.vngx.jsch.algorithm.UnsupportedAlgorithmException;
 import org.vngx.jsch.exception.JSchException;
 import org.vngx.jsch.util.Logger;
@@ -154,7 +156,7 @@ public abstract class DHGroupKexAlgorithm extends AbstractDHKexAlgorithm {
 				_buffer.putMPInt(_e);
 				_buffer.putMPInt(f);
 				_buffer.putMPInt(_K);
-				_H = Arrays.copyOf(_buffer.getArray(), _buffer.getLength());
+				_H = Util.copyOf(_buffer.getArray(), _buffer.getLength());
 				_hash.update(_H, 0, _H.length);
 				_H = _hash.digest(); // Generate hash from concatenated values
 
