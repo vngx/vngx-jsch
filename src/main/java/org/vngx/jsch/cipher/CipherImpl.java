@@ -28,13 +28,14 @@
 
 package org.vngx.jsch.cipher;
 
-import java.util.Arrays;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.ShortBufferException;
 import javax.crypto.spec.DESedeKeySpec;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
+
+import org.vngx.jsch.Util;
 import org.vngx.jsch.config.JSchConfig;
 
 /**
@@ -113,7 +114,7 @@ public class CipherImpl implements Cipher {
 		key = validateKeySize(key);	// Update key size if too large
 		try {
 			// Retrieve cipher instance based on JCE provider specified in CipherManager
-			_cipher = JSchConfig.getConfig().getString(JSchConfig.DEFAULT_SECURITY_PROVIDER).isEmpty() ?
+			_cipher = JSchConfig.getConfig().getString(JSchConfig.DEFAULT_SECURITY_PROVIDER).length()==0 ?
 						javax.crypto.Cipher.getInstance(_cipherName) :
 						javax.crypto.Cipher.getInstance(_cipherName, 
 								JSchConfig.getConfig().getString(JSchConfig.DEFAULT_SECURITY_PROVIDER));
@@ -141,7 +142,7 @@ public class CipherImpl implements Cipher {
 	 * @return validated key
 	 */
 	byte[] validateKeySize(byte[] key) {
-		return key.length > _blockSize ? Arrays.copyOf(key, _blockSize) : key;
+		return key.length > _blockSize ? Util.copyOf(key, _blockSize) : key;
 	}
 
 	/**
@@ -152,7 +153,7 @@ public class CipherImpl implements Cipher {
 	 * @return validated IV
 	 */
 	byte[] validateIVSize(byte[] iv) {
-		return iv.length > _ivSize ? Arrays.copyOf(iv, _ivSize) : iv;
+		return iv.length > _ivSize ? Util.copyOf(iv, _ivSize) : iv;
 	}
 
 	/**
@@ -261,7 +262,7 @@ public class CipherImpl implements Cipher {
 			key = validateKeySize(key);
 			try {
 				// Retrieve cipher instance based on JCE provider specified in CipherManager
-				_cipher = JSchConfig.getConfig().getString(JSchConfig.DEFAULT_SECURITY_PROVIDER).isEmpty() ?
+				_cipher = JSchConfig.getConfig().getString(JSchConfig.DEFAULT_SECURITY_PROVIDER).length()==0 ?
 						javax.crypto.Cipher.getInstance(_cipherName) :
 						javax.crypto.Cipher.getInstance(_cipherName,
 								JSchConfig.getConfig().getString(JSchConfig.DEFAULT_SECURITY_PROVIDER));
@@ -354,7 +355,7 @@ public class CipherImpl implements Cipher {
 			key = validateKeySize(key);
 			try {
 				// Retrieve cipher instance based on JCE provider specified in CipherManager
-				_cipher = JSchConfig.getConfig().getString(JSchConfig.DEFAULT_SECURITY_PROVIDER).isEmpty() ?
+				_cipher = JSchConfig.getConfig().getString(JSchConfig.DEFAULT_SECURITY_PROVIDER).length()==0 ?
 						javax.crypto.Cipher.getInstance(_cipherName) :
 						javax.crypto.Cipher.getInstance(_cipherName,
 								JSchConfig.getConfig().getString(JSchConfig.DEFAULT_SECURITY_PROVIDER));

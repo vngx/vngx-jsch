@@ -146,6 +146,6 @@ public interface SocketFactory {
 			return socket.getOutputStream();
 		}
 		
-	};
+	}
 
 }

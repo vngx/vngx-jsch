@@ -32,7 +32,8 @@ import java.security.DigestException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
-import java.util.Arrays;
+
+import org.vngx.jsch.Util;
 import org.vngx.jsch.config.JSchConfig;
 
 /**
@@ -86,7 +87,7 @@ public abstract class MACImplAlternate implements MAC {
 	 */
 	protected MACImplAlternate(String messageDigest) throws NoSuchAlgorithmException, NoSuchProviderException {
 		String provider = JSchConfig.getConfig().getString(JSchConfig.DEFAULT_SECURITY_PROVIDER);
-		_md = provider.isEmpty() ? MessageDigest.getInstance(messageDigest) :
+		_md = provider.length()==0 ? MessageDigest.getInstance(messageDigest) :
 									MessageDigest.getInstance(messageDigest, provider);
 		_blockSize = _md.getDigestLength();
 	}
@@ -100,15 +101,15 @@ public abstract class MACImplAlternate implements MAC {
 	public void init(byte[] key) {
 		// If key size greater than block size, truncate key to block size length
 		if( key.length > _blockSize ) {
-			key = Arrays.copyOf(key, _blockSize);
+			key = Util.copyOf(key, _blockSize);
 		}
 		// if key is longer than B bytes reset it to key=Hash(key)
 		if( key.length > B ) {
 			_md.update(key, 0, key.length);
 			key = _md.digest();
 		}
-		_kInnerPad = Arrays.copyOf(key, B);
-		_kOuterPad = Arrays.copyOf(key, B);
+		_kInnerPad = Util.copyOf(key, B);
+		_kOuterPad = Util.copyOf(key, B);
 
 		// XOR key with ipad and opad values
 		for( int i = 0; i < B; i++ ) {

@@ -31,10 +31,12 @@ package org.vngx.jsch.hash;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
-import java.util.Arrays;
+
 import javax.crypto.Mac;
 import javax.crypto.ShortBufferException;
 import javax.crypto.spec.SecretKeySpec;
+
+import org.vngx.jsch.Util;
 import org.vngx.jsch.config.JSchConfig;
 
 /**
@@ -73,14 +75,14 @@ public class MACImpl implements MAC {
 	 */
 	protected MACImpl(String macName, int blockSize) throws NoSuchAlgorithmException, NoSuchProviderException {
 		String provider = JSchConfig.getConfig().getString(JSchConfig.DEFAULT_SECURITY_PROVIDER);
-		_mac = provider.isEmpty() ? Mac.getInstance(macName) : Mac.getInstance(macName, provider);
+		_mac = provider.length()==0 ? Mac.getInstance(macName) : Mac.getInstance(macName, provider);
 		_blockSize = blockSize;
 	}
 
 	@Override
 	public void init(byte[] key) throws MACException {
 		if( key.length > _blockSize ) {
-			key = Arrays.copyOf(key, _blockSize);
+			key = Util.copyOf(key, _blockSize);
 		}
 		try {
 			_mac.init(new SecretKeySpec(key, _mac.getAlgorithm()));

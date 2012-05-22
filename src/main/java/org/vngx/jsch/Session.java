@@ -47,8 +47,8 @@ import java.io.InterruptedIOException;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -117,8 +117,6 @@ public final class Session implements Runnable {
 	private UserInfo _userinfo;
 
 	//=== Key Exchange State Variables ===
-	/** Timestamp when KEX was initiated for timing out key exchanges. */
-	private long _kexStartTime = 0L;
 	/** Key exchange for performing kex and storing state. */
 	private KeyExchange _keyExchange;
 	/** Host key generated after key exchange and validation. */
@@ -176,11 +174,11 @@ public final class Session implements Runnable {
 	 * @param config to override global configuration properties
 	 */
 	Session(String host, int port, String username, SessionConfig config) {
-		if( host == null || host.isEmpty() ) {
+		if( host == null || host.length()==0 ) {
 			throw new IllegalArgumentException("SSH host cannot be null/empty:" + host);
 		} else if( port < 0 ) {
 			throw new IllegalArgumentException("SSH port cannot be less than zero: " + port);
-		} else if( username == null || username.isEmpty() ) {
+		} else if( username == null || username.length()==0 ) {
 			throw new IllegalArgumentException("SSH username cannot be null/empty: " + username);
 		}
 		_config = config != null ? config : new SessionConfig();
@@ -794,9 +792,14 @@ public final class Session implements Runnable {
 				}
 			}
 		} catch(Exception e) {
-			_keyExchange.kexCompleted();
-			if( JSch.getLogger().isEnabled(Logger.Level.INFO) ) {
-				JSch.getLogger().log(Logger.Level.INFO, "Caught an exception, leaving main loop due to " + e, e);
+			if (e instanceof SocketException && !_connected) {
+				// just closing the session
+			} else {
+				_keyExchange.kexCompleted();
+				if( JSch.getLogger().isEnabled(Logger.Level.INFO) ) {
+					JSch.getLogger().log(Logger.Level.INFO,
+						"Caught an exception, leaving main loop due to " + e, e);
+				}
 			}
 		}
 		try {
@@ -1439,7 +1442,7 @@ public final class Session implements Runnable {
 	 * @return session ID copy
 	 */
 	public byte[] getSessionId() {
-		return Arrays.copyOf(_sessionId, _sessionId.length);
+		return Util.copyOf(_sessionId, _sessionId.length);
 	}
 
 	/**

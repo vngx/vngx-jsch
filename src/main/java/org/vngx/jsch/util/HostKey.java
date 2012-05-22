@@ -29,11 +29,11 @@
 
 package org.vngx.jsch.util;
 
-import org.vngx.jsch.Util;
-import org.vngx.jsch.exception.JSchException;
-import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.Set;
+
+import org.vngx.jsch.Util;
+import org.vngx.jsch.exception.JSchException;
 
 /**
  * <p>Host key implementation as outlined in the RFC4251 spec for SSH.</p>
@@ -95,7 +95,7 @@ public class HostKey {
 			throw new IllegalArgumentException("Key value cannot be null");
 		}
 		_host = host;
-		_key = Arrays.copyOf(key, key.length);	// Copy key for security
+		_key = Util.copyOf(key, key.length);	// Copy key for security
 		if( keyType == null ) {
 			_type = guessType(key);
 			if( _type == KeyType.UNKNOWN ) {

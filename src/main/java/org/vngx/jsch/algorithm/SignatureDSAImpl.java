@@ -75,10 +75,12 @@ public final class SignatureDSAImpl implements SignatureDSA {
 		Buffer signature = new Buffer(_signature.sign());
 		// signature is in ASN.1
 		// SEQUENCE::={ r INTEGER, offset INTEGER }
-		signature.setOffSet(3);
+		signature.setOffSet(3); // skip DER-sequence type, seq length and DER bytearray type (1 byte each)
+				
 		byte[] r = signature.getBytes(new byte[signature.getByte()]);
+		signature.getByte(); // skip DER bytearray type 
 		byte[] s = signature.getBytes(new byte[signature.getByte()]);
-		
+
 		// result must be 40 bytes, but length of r and offset may not be 20 bytes
 		byte[] result = new byte[40];
 		System.arraycopy(r, (r.length > 20) ? 1 : 0,

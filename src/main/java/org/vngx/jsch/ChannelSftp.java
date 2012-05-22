@@ -801,7 +801,6 @@ public final class ChannelSftp extends ChannelSession {
 			} else {
 				String upath = Util.unquote(path);
 				if( _stat(upath).isDir() ) {
-					bPattern = null;
 					dir = upath;
 				} else {
 					// If we could generate longname by ourself,
@@ -1254,10 +1253,6 @@ public final class ChannelSftp extends ChannelSession {
 
 	private void sendLSTAT(byte[] path) throws Exception {
 		sendPacketPath(SSH_FXP_LSTAT, path);
-	}
-
-	private void sendFSTAT(byte[] handle) throws Exception {
-		sendPacketPath(SSH_FXP_FSTAT, handle);
 	}
 
 	private void sendSETSTAT(byte[] path, SftpATTRS attr) throws Exception {
@@ -1918,8 +1913,8 @@ public final class ChannelSftp extends ChannelSession {
 			if( __closed ) {
 				return;
 			}
-			__closed = true;
 			flush();
+			__closed = true;
 			if( __monitor != null ) {
 				__monitor.end();
 			}

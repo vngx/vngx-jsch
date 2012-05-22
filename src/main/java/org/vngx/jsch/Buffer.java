@@ -392,7 +392,7 @@ public final class Buffer {
 	 */
 	public long getUInt() {
 		return  (((long) getShort() << 16) & 0xFFFF0000L) |	// First 16 bytes
-				(((long) getShort()      ) & 0x0000FFFFL);	// second 16 bytes
+				((       getShort()      ) & 0x0000FFFFL);	// second 16 bytes
 	}
 
 	/**
@@ -580,7 +580,7 @@ public final class Buffer {
 			if( (index + required) > Packet.MAX_SIZE ) {
 				throw new IllegalStateException("Buffer cannot exceed max packet size: "+(index+required));
 			}
-			buffer = Arrays.copyOf(buffer, index + required);
+			buffer = Util.copyOf(buffer, index + required);
 		}
 		return this;
 	}

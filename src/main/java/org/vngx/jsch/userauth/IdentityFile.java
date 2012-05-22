@@ -320,6 +320,7 @@ public class IdentityFile implements Identity {
 				Buffer _buf = new Buffer(_encodedData);
 				_buf.getInt();  // 0x3f6ff9be
 				_buf.getInt();
+				@SuppressWarnings("unused")
 				byte[] typeName = _buf.getString();
 				byte[] cipherName = _buf.getString();
 				String cipher = Util.byte2str(cipherName);

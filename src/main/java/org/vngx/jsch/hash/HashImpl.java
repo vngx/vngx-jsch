@@ -66,8 +66,8 @@ public class HashImpl implements Hash {
 	 */
 	public HashImpl(String messageDigest, int blockSize) throws NoSuchAlgorithmException, NoSuchProviderException {
 		String provider = JSchConfig.getConfig().getString(JSchConfig.DEFAULT_SECURITY_PROVIDER);
-		_md = provider.isEmpty() ? MessageDigest.getInstance(messageDigest) :
-									MessageDigest.getInstance(messageDigest, provider);
+		_md = provider.length()==0 ? MessageDigest.getInstance(messageDigest) :
+									 MessageDigest.getInstance(messageDigest, provider);
 		_blockSize = blockSize;
 	}
 
