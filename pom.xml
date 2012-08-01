@@ -4,9 +4,32 @@
 	<groupId>org.vngx</groupId>
 	<artifactId>vngx-jsch</artifactId>
 	<packaging>bundle</packaging>
-	<version>0.9</version>
+	<version>0.10</version>
 	<name>vngx-jsch</name>
 	<url>http://maven.apache.org</url>
+	<description>**vngx-jsch** (beta) is an updated version of the popular JSch SSH library 
+    written in pure Java.  It has been updated to Java 6 with all the latest 
+    language features and improved code clarity.
+  </description>
+  <licenses>
+    <license>
+      <name>MIT</name>
+      <url>http://en.wikipedia.org/wiki/MIT_License</url>
+      <distribution>repo</distribution>
+      <comments></comments>
+    </license>
+  </licenses>
+  <scm>
+    <connection>scm:git:git@github.com:vngx/vngx-jsch.git</connection>
+    <url>scm:git:git@github.com:vngx/vngx-jsch.git</url>
+    <developerConnection>scm:git:git@github.com:vngx/vngx-jsch.git</developerConnection>
+  </scm>
+  <developers>
+    <developer>
+      <id>scott</id>
+      <name>Scott Rahner</name>
+    </developer>
+  </developers>
 	<build>
 		<plugins>
 			<!-- Ensures 1.6 compilation -->
