@@ -24,5 +24,5 @@ Now available via any central Maven repo
     <dependency>
         <groupId>org.vngx</groupId>
         <artifactId>vngx-jsch</artifactId>
-        <version>0.9</version>
+        <version>0.10</version>
     </dependency>
