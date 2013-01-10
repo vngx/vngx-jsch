@@ -1,7 +1,7 @@
 vngx-jsch - A Java SSH implementation
 =====================================
 
-**vngx-jsch** (beta) is an updated version of the popular JSch SSH library 
+**vngx-jsch** is an updated version of the popular JSch SSH library 
 written in pure Java.  It has been updated to Java 6 with all the latest 
 language features and improved code clarity.
 
