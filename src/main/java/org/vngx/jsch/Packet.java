@@ -181,7 +181,7 @@ public final class Packet {
 		/* If shifting to add the MAC to end of packet is greater than the packet
 		 * length, then create new larger buffer to hold packet and copy data
 		 * into it and replace internal byte array of buffer. */
-		buffer.ensureCapacity(offset + buffer.index - 5 - 9 - length);
+		buffer.ensureCapacity(offset - 5 - 9 - length);
 
 		System.arraycopy(buffer.buffer, length + 5 + 9, buffer.buffer, offset, buffer.index - 5 - 9 - length);
 

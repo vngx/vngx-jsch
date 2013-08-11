@@ -1,10 +1,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.vngx</groupId>
+	<groupId>com.gnshealthcare</groupId>
 	<artifactId>vngx-jsch</artifactId>
 	<packaging>bundle</packaging>
-	<version>0.10</version>
+	<version>0.10-SNAPSHOT</version>
 	<name>vngx-jsch</name>
 	<url>http://maven.apache.org</url>
 	<description>**vngx-jsch** (beta) is an updated version of the popular JSch SSH library 
